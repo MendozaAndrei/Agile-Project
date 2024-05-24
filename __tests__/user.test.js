@@ -1,101 +1,75 @@
-const mongoose = require('mongoose');
-const { userModel } = require('../models/userModel.js');
-// const { remindersController } = require('../controller/reminder_controller.js');
-const remindersController = require('../controller/reminder_controller');
-// Mock the addUser function
-jest.mock('../models/userModel.js', () => ({
-  userModel: {
-    addUser: jest.fn().mockResolvedValue({ id: '1', name: 'Test User', email: 'test@example.com', password: 'password', role: 'regular' }),
-    findById: jest.fn((id)=>{
-      if(id === '1'){
-        return Promise.resolve({ id: '1', name: 'Test User', email: 'test@example.com', password: 'password', role: 'regular' });
-      } else {
-        return Promise.resolve(null);
+const userModel = require('../models/userModel');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-      }
-    }),
-  },
-}));
+describe('Tests for User Model', () => {
+    afterEach(async () => {
+        await prisma.user.deleteMany();
+      });
+    
+      afterAll(async () => {
+        await prisma.$disconnect();
+      });
 
-
-
-describe('User model test', () => {
-
-  it('should create a new user', async () => {
-    const user = await userModel.addUser({ name: 'A new user', email: 'test@example.com', password: 'password', role: 'regular' });
-  
-    const foundUser = await userModel.findById(user.id);
-    expect(foundUser.name).toBe('Test User');
+  // Test for findOne
+  test('findOne returns a user if they exist', async () => {
+    const user1 = {
+      name: "Jimmy Doe",
+      email: "jimmy123@gmail.com",
+      password: "jimmy123!",
+      role: "regular",
+    };
+    const createdUser = await userModel.addUser(user1);
+    const foundUser = await userModel.findOne(createdUser.email);
+    expect(foundUser.email).toEqual(createdUser.email);
   });
 
-
-
-  
-  it('should return null if the user is not found', async () => {
-    const user = await userModel.findById('30');
-    expect(user).toBeNull();
-  })
-
+  // Test for findOne when user does not exist
+test('findOne returns null if user does not exist', async () => {
+  const email = "abc@gmail.com";
+  const user = await userModel.findOne(email);
+  expect(user).toBeNull();
 });
 
-
-jest.mock('../controller/reminder_controller', () => ({
-  create: jest.fn().mockResolvedValue({ id: '1', userId: '1', title: 'Test Reminder', description: 'This is a test reminder', date: new Date() }),
-  findById: jest.fn((id) => {
-    if (id === '1') {
-      return Promise.resolve({ id: '1', userId: '1', title: 'Test Reminder', description: 'This is a test reminder', date: new Date() });
-    } else {
-      return Promise.resolve(null);
-    }
-  }),
-}));
-
-describe('Reminder controller test', () => {
-
-  it('should create a new reminder', async () => {
-    const reminder = await remindersController.create({ userId: '1', title: 'Test Reminder', description: 'This is a test reminder', date: new Date() });
-  
-    const foundReminder = await remindersController.findById(reminder.id);
-    expect(foundReminder.title).toBe('Test Reminder');
+  // Test for findById
+  test('findById returns a user if they exist', async () => {
+    const user2 = {
+      name: "Johnny Doe",
+      email: "johnny123@gmail.com",
+      password: "johnny123!",
+      role: "admin",
+    };
+    const createdUser = await userModel.addUser(user2);
+    const foundUser = await userModel.findById(createdUser.id);
+    expect(foundUser.id).toEqual(createdUser.id);
   });
 
-  it("should find the reminder by its given id", () =>{
-    const reminder = remindersController.findById("1")
-    expect(reminder.title).toBe("Test Reminder ")
-  })
-
-  it('should return null if the reminder is not found', async () => {
-    const reminder = await remindersController.findById('2');
-    expect(reminder).toBeNull();
-  });
+  // Test for findById when user does not exist
+test('findById throws error if user does not exist', async () => {
+  const id = '663ae7a7f34f763ca8e58d6f'; 
+  await expect(userModel.findById(id)).rejects.toThrow(`Couldn't find user with id: ${id}`);
 });
 
-
-
-// Functional tests for the interaction between userModel and remindersController
-describe('User-Reminder functional tests', () => {
-  let createdUser;
-  let createdReminder;
-
-  beforeAll(async () => {
-    // Create a user
-    createdUser = await userModel.addUser({ name: 'A new user', email: 'test@example.com', password: 'password', role: 'regular' });
+  // Test for addUser
+  test('addUser creates a new user', async () => {
+    const user3 = {
+      name: "Michael Reefs",
+      email: "michaelreefs@gmail.com",
+      password: "michael123!",
+      role: "regular",
+    };
+    const newUser = await userModel.addUser(user3);
+    expect(newUser.email).toEqual(user3.email);
   });
 
-  it('should create a reminder for the user', async () => {
-    // Create a reminder for the user
-    createdReminder = await remindersController.create({ userId: createdUser.id, title: 'Test Reminder', description: 'This is a test reminder', date: new Date() });
-    // Check that the reminder was created correctly
-    expect(createdReminder.title).toBe('Test Reminder');
-    expect(createdReminder.userId).toBe(createdUser.id);
-  });
-
-  it('should retrieve the reminder by its ID', async () => {
-    // Retrieve the reminder by its ID
-    const foundReminder = await remindersController.findById(createdReminder.id);
-    // Check that the reminder was retrieved correctly
-    expect(foundReminder.title).toBe('Test Reminder');
-    expect(foundReminder.userId).toBe(createdUser.id);
-  });
+  // Test for addUser when user data is invalid
+test('addUser throws error if user data is invalid', async () => {
+  const user = {
+    name: 12,
+    email: "invalid", 
+    password: "123", 
+    role: "regular",
+  };
+  await expect(userModel.addUser(user)).rejects.toThrow();
 });
-
+});
