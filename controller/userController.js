@@ -6,11 +6,13 @@ function isUserValid(user, password) {
   return user.password === password
 }
 
+const bcrypt = require('bcrypt');
+
 const getUserByEmailIdAndPassword = async (email, password) => {
   let user = await userModel.findOne(email)
   if (user) {
-    if (isUserValid(user, password)) {
-      // console.log(prisma)
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
       return user
     }
   }
