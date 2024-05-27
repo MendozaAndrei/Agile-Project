@@ -3,6 +3,7 @@ const prisma = new PrismaClient()
 
 let flashcardsController = {
   list: async (req, res) => {
+    // Finds every flashcard that is linked to the currently logged in user and stores it to the variable "flashcards"
       let flashcards = await prisma.flashcard.findMany({
         where: {
           userId: req.user.id,
@@ -10,7 +11,9 @@ let flashcardsController = {
       })
       res.render("flashcards/flashcards", { flashcards: flashcards })
   },
+  // This is used to show the popup of the page where it has the section to enter the Question and the Answer
   new: async (req, res) => {
+    // 
     let flashcards = await prisma.flashcard.findMany({
       where: {
         userId: req.user.id,
@@ -20,31 +23,13 @@ let flashcardsController = {
     res.render("flashcards/flashcard_create", { flashcards:flashcards })
   },
 
-  listOne: async (req, res) => {
-    try{
-      let flashcardToFind = req.params.id
-      let searchResult = await prisma.flashcard.findUnique({
-        where: {
-          id: flashcardToFind,}
-      });
-      if (searchResult != null) {
-        res.render("flashcard/single-flashcard", { flashcardItem: searchResult })
-      } else {
-        let flashcards = await prisma.flashcard.findMany({
-          where: {
-            userId: req.user.id,
-          },
-        });
-        res.render("flashcard/index", { flashcards: flashcards })
-      }
-    }catch (error) {
-      console.error("Error fetching flashcard:", error);
-      res.status(500).send("Server Error");
-    }
-  },
-
+  
+  // On the page of flashcard/new, this will reside in it as well, where it grabs the create.
   create: async (req, res) => {
     try{
+
+
+      //Grabs the question and the answer from the body to CREATE it, assigning the userID as well. 
       const newFlashcard = await prisma.flashcard.create({
         data: {
           question: req.body.question,
@@ -61,7 +46,9 @@ let flashcardsController = {
   },
 
   edit: async (req, res) => {
+    //This will grab the ID of the flashcard so the infromation can be grabbed from it. 
     try {
+
       let flashcardToFind = req.params.id;
       let searchResult = await prisma.flashcard.findUnique({
         where: { id: flashcardToFind },
@@ -79,9 +66,12 @@ let flashcardsController = {
   },
 
 
-  update: async (req, res) => {
+  update: async (req, res) => { //This one updates and changes the information regarding the Flash Cards
     try {
+      //Takes the flashcards ID
       let flashcardToFind = req.params.id;
+
+      //This wil will FIND the unique flashcard using the variable flashcardToFind
       let flashcard = await prisma.flashcard.findUnique({
         where: { id: flashcardToFind },
       });
@@ -89,7 +79,7 @@ let flashcardsController = {
       if (!flashcard) {
         return res.status(404).send("Flashcard not found");
       }
-
+      //This will update the flashcard with the new information that is inputted by the user.
       let updatedFlashcard = await prisma.flashcard.update({
         where: { id: flashcardToFind },
         data: {
@@ -118,46 +108,11 @@ let flashcardsController = {
     }
   },
 
-  admin: (req, res) => {
-    req.sessionStore.all((err, sessions) => {
-      if (err) {
-        console.log(err)
-        return res.redirect("/login")
-      }
+  
 
-      console.log(sessions)
 
-      let sessionList = []
-      for (let key in sessions) {
-        if (req.user.id != sessions[key].passport.user) {
-          console.log(key)
-          sessionList.push({"SessionID":key, "UserID":sessions[key].passport.user})
-        }
-      }
-      res.render("admin", { user: req.user, sessions: sessionList })
-    })
-  },
 
-  destroy: (req, res) => {
-    const sessionId = req.params.sessionId
-    req.sessionStore.destroy(sessionId, (err) => {
-      if (err) {
-        console.log(err)
-        res.redirect("/admin")
-      } else {
-        res.redirect('/admin')
-      }
-    })
-  },
 
-  logout: (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        console.log(err)
-      }
-      res.redirect('/login') 
-    })
-  }
 }
 
 module.exports = flashcardsController

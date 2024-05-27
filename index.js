@@ -115,7 +115,7 @@ app.get('/reminders/:date', async (req, res) => {
   let reminders = await prisma.reminder.findMany({
     where: {
       dateDue: date,
-      userId: req.user.id  // Replace with the actual user ID
+      userId: req.user.id  
     }
   });
 
@@ -131,6 +131,7 @@ app.get("/register", authController.register)
 app.post("/register", authController.registerSubmit)
 app.get("/login", authController.login)
 app.post("/login", authController.loginSubmit)
+//Too lazy to add to the reminder_Controller
 app.get('/reminders/:date', async (req, res) => {
   const date = req.params.date;
   const reminders = await prisma.reminder.findMany({
