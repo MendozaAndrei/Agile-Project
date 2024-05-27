@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://ajhmendoza30:xu2Uqghh6VLl8V7x@cluster0.g4cpyqm.mongodb.net/User"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -15,14 +15,12 @@ model User {
   role     String
 }
 
-model reminder {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  completed   Boolean
-  dateCreated DateTime  @db.Date
-  dateDue     DateTime? @db.Date
-  description String
-  title       String
-  userId      String    @db.ObjectId
+model flashcard {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  answer String
+  question String
+  userId String @db.ObjectId
+
 }
 
 model note {
@@ -31,4 +29,14 @@ model note {
   dateCreated DateTime @db.Date
   title       String
   userId      String   @db.ObjectId
+}
+
+model reminder {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  completed   Boolean
+  dateCreated DateTime  @db.Date
+  dateDue     DateTime? @db.Date
+  description String
+  title       String
+  userId      String    @db.ObjectId
 }
