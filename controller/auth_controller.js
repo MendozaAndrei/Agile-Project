@@ -1,7 +1,6 @@
 const { userModel } = require("../models/userModel")
 const passport = require("passport")
 const bcrypt = require('bcrypt')
-
 let authController = {
 
   login: (req, res) => {
@@ -20,7 +19,6 @@ let authController = {
   },
 
   registerSubmit: async (req, res) => {
-    //To register a new person into the entire database
     const { name, email, password, re_enter_password } = req.body
   
     if (!name || !email || !password || !re_enter_password) {
@@ -39,23 +37,22 @@ let authController = {
             message: "User with this email already exists.",
           })
         } else {
+          const hashedPassword = await bcrypt.hash(password, 10); // hash the password
+  
           const newUser = await userModel.addUser({
             name: name,
             email: email,
-            password: password,
+            password: hashedPassword, // store the hashed password
             role: "regular",
           })
           console.log(newUser)
           res.redirect("/login")
         }
-      } catch (error) {
-        console.error(error)
-        res.render("auth/register", {
-          message: "An error occurred while registering. Please try again.",  
-        })
+      } catch (err) {
+        // handle error
       }
     }
-  },
+  }
 }
 
 module.exports = authController

@@ -15,14 +15,12 @@ model User {
   role     String
 }
 
-model reminder {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  completed   Boolean
-  dateCreated DateTime @db.Date
-  dateDue     DateTime?
-  description String
-  title       String
-  userId      String   @db.ObjectId
+model flashcard {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  answer String
+  question String
+  userId String @db.ObjectId
+
 }
 
 model note {
@@ -31,4 +29,18 @@ model note {
   dateCreated DateTime @db.Date
   title       String
   userId      String   @db.ObjectId
+<<<<<<< HEAD
 }
+=======
+}
+
+model reminder {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  completed   Boolean
+  dateCreated DateTime  @db.Date
+  dateDue     DateTime? @db.Date
+  description String
+  title       String
+  userId      String    @db.ObjectId
+}
+>>>>>>> 9d8537b9d89007d15d73710a88876e333774e0a6
