@@ -29,7 +29,7 @@ let notesController = {
     
     let note = {
       title: req.body.title,
-      content: "New Note! Write Something",
+      content: "New Note! Write something here!",
       userId: req.user.id,
       dateCreated: new Date()
     }
