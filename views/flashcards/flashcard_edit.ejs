@@ -14,7 +14,7 @@
     margin-bottom: 0px;
   }
 
-  #new-flashcard-container
+  #header-btn-container
   {
     display:flex;
     justify-content: flex-end;
@@ -23,16 +23,12 @@
     align-items:center;
   }
 
-  #btn-submit{
-    margin-bottom: auto;
-  }
-
 </style>
 <!-- import from flashcards.ejs -->
 <div class="header">
   <h1>Edit Flashcard</h1>
-  <div id="new-flashcard-container">  
-    <button type="submit" id='btn-submit' class="btn btn-secondary">Submit</button>
+  <div id="header-btn-container">  
+   
   </div>
 </div>
 
@@ -53,6 +49,7 @@
       <label for="description">answer</label>
       <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Description" name="answer"><%= flashcardItem.answer %></textarea>
     </div>
+    <button type="submit" class="btn btn-custom">Submit</button>
 
     
     
