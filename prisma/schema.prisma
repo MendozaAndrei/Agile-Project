@@ -29,9 +29,6 @@ model note {
   dateCreated DateTime @db.Date
   title       String
   userId      String   @db.ObjectId
-<<<<<<< HEAD
-}
-=======
 }
 
 model reminder {
@@ -43,4 +40,3 @@ model reminder {
   title       String
   userId      String    @db.ObjectId
 }
->>>>>>> 9d8537b9d89007d15d73710a88876e333774e0a6

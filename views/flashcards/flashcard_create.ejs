@@ -91,8 +91,7 @@
   }
   .btn-display{
       display:flex;
-      justify-content: space-between;
-  }
+    }
   #btn {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -182,7 +181,6 @@
 <!-- COPYPASTE flashcards.ejs LOL -->
 
 
-
 <ul > 
   <% flashcards.forEach(flashcard => { %>
     <li  style="width:fit-content;">
@@ -197,10 +195,17 @@
         </div>
       </div>
       <div class="btn-display"> 
-          <a id="btn" class="btn-edit"   href="/flashcards/edit/<%= flashcard.id %>">Edit</a>
-          <form class="deleteForm" method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
-              <button type="submit" id="btn" class= "btn-delete" >Delete</button>
-          </form>
+        <a href="/flashcards/edit/<%= flashcard.id %>">
+          <img src="https://cdn-icons-png.flaticon.com/128/1388/1388394.png" alt="Edit" style="width:50px;height:50px;margin:20px 0px 0px 10px;">
+        </a>
+        
+
+
+        <form method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
+          <button type="submit" id="btn" style="background: transparent; border: none;">
+            <img src="https://cdn-icons-png.flaticon.com/128/4218/4218149.png" alt="Delete" style="width:50px;height:50px">
+          </button>
+        </form>
       <div> 
 
     </li>

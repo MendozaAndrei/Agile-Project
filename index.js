@@ -86,12 +86,26 @@ app.get("/admin", reminderController.admin)
 app.get("/destroy/:sessionId", reminderController.destroy) 
 app.get("/reminder/new", reminderController.new)
 app.get("/reminder/:id", reminderController.listOne)
+app.post("/reminder/update/:id", reminderController.update)
+app.post("/reminder/delete/:id", reminderController.delete)
 app.get("/reminder/:id/edit", reminderController.edit)
 app.get("/logout", reminderController.logout)
 app.get("/register", authController.register)
 app.get("/login", authController.login)
+app.post("/reminder", reminderController.create)
 
-
+app.get('/reminders/date', async (req, res) => {
+  let date = new Date(req.query.date);
+  let reminders = await prisma.reminder.findMany({
+    where: {
+      AND: [
+        { dateDue: { gte: date } },
+        { dateDue: { lt: new Date(date.getTime() + 24 * 60 * 60 * 1000) } }
+      ]
+    }
+  });
+  res.json(reminders);
+});
 async function getRemindersForDate(dateString) {
   let date = new Date(dateString);
   let isoDate = date.toISOString();
@@ -102,27 +116,7 @@ async function getRemindersForDate(dateString) {
   });
   return reminders;
 }
-app.get('/reminders/:date', async (req, res) => {
-  let date = new Date(req.params.date);
-  date.setHours(0);
-  date.setMinutes(0);
-  date.setSeconds(0);
-  date.setMilliseconds(0);
 
-  console.log('date:', date);
-  console.log('userId:', req.user.id);
-
-  let reminders = await prisma.reminder.findMany({
-    where: {
-      dateDue: date,
-      userId: req.user.id  
-    }
-  });
-
-  console.log('reminders:', reminders);
-  
-  res.json(reminders);
-});
 
 //Routes for Login and Logout
 app.get("/logout", reminderController.logout)
@@ -132,15 +126,7 @@ app.post("/register", authController.registerSubmit)
 app.get("/login", authController.login)
 app.post("/login", authController.loginSubmit)
 //Too lazy to add to the reminder_Controller
-app.get('/reminders/:date', async (req, res) => {
-  const date = req.params.date;
-  const reminders = await prisma.reminder.findMany({
-    where: {
-      dateDue: new Date(date),
-    },
-  });
-  res.json(reminders);
-});
+
 
 
 //Routes for Notes

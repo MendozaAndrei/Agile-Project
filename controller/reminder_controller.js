@@ -29,6 +29,7 @@ let remindersController = {
       // Pass the fetched reminders to the view
       const date = new Date();
       const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+      console.log(date)
 
       return res.render("reminder/index", { reminders: reminders , daysInMonth : daysInMonth});
     } else {
@@ -61,6 +62,9 @@ let remindersController = {
           dateDue: new Date(year, month - 1, day),  // JavaScript's Date object uses 0-based months
         },
       })
+
+
+      console.log(reminders.dateDue)
       res.render("reminder/index", { reminders: reminders })
     }
   },

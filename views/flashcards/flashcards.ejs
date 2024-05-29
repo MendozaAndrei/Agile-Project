@@ -49,7 +49,7 @@
 
   }
   li, #creation {
-  /* border: solid rgb(176, 176, 176) 3px; */
+  
   padding: 10px 10px 10px 10px;
   background-color: rgb(232, 232, 232);
   margin: 30px 30px 30px 30px;
@@ -63,12 +63,12 @@
 
   .flashcard {
     position: relative;
-    width: 300px; /* Set a fixed width */
-    min-height: 200px; /* Set a minimum height */
+    width: 300px; 
+    min-height: 200px;
     margin: 10px;
     border: none;
     border-bottom: 1px solid #ccc;
-    overflow: auto; /* Allow the flashcard to expand vertically */
+    overflow: auto; 
   }
 
   .flashcard-question, .flashcard-answer {
@@ -77,7 +77,6 @@
 
     box-sizing: border-box;
     padding: 10px;
-    width: 100%;
     cursor: pointer;
     height:250px;
   }
@@ -91,7 +90,6 @@
   }
   .btn-display{
       display:flex;
-      justify-content: space-between;
   }
   #btn {
   margin-top: 10px;
@@ -177,10 +175,17 @@
         </div>
       </div>
       <div class="btn-display"> 
-          <a id="btn" class="btn-edit"   href="/flashcards/edit/<%= flashcard.id %>">Edit</a>
-          <form class="deleteForm" method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
-              <button type="submit" id="btn" class= "btn-delete" >Delete</button>
-          </form>
+        <a href="/flashcards/edit/<%= flashcard.id %>">
+          <img src="https://cdn-icons-png.flaticon.com/128/1388/1388394.png" alt="Edit" style="width:50px;height:50px;margin:20px 0px 0px 10px;">
+        </a>
+        
+
+
+        <form method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
+          <button type="submit" id="btn" style="background: transparent; border: none;">
+            <img src="https://cdn-icons-png.flaticon.com/128/4218/4218149.png" alt="Delete" style="width:50px;height:50px">
+          </button>
+        </form>
       <div> 
 
     </li>
