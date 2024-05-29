@@ -1,12 +1,17 @@
 <%- include ("../partials/navbar.ejs") %>
 
 <style>
+  
     /* import from flashcards.ejs */
   .header{
     max-width: 1140px;
     display:flex;
     margin: 1vw auto 1vw auto;
     align-items:center;
+  }
+
+  .header h1{
+    margin-bottom: 0px;
   }
 
   #new-flashcard-container
@@ -18,13 +23,16 @@
     align-items:center;
   }
 
+  #btn-submit{
+    margin-bottom: auto;
+  }
 
 </style>
 <!-- import from flashcards.ejs -->
 <div class="header">
   <h1>Edit Flashcard</h1>
   <div id="new-flashcard-container">  
-    <button type="submit" class="btn btn-secondary">Submit</button>
+    <button type="submit" id='btn-submit' class="btn btn-secondary">Submit</button>
   </div>
 </div>
 

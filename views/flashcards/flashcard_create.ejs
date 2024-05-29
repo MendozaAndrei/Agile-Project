@@ -32,6 +32,10 @@
     align-items:center;
   }
 
+  .header h1{
+    margin-bottom: 0px;
+  }
+
   #new-flashcard-container
   {
     display:flex;
@@ -39,6 +43,11 @@
     margin-left: auto;
 
     align-items:center;
+  }
+
+  #btn-submit{
+    margin-bottom: auto;
+    margin-top: auto;
   }
 
     .flashcard {
@@ -82,16 +91,19 @@
     cursor: pointer;
   }
 
+
+
   </style>
   
   <!-- import from flashcards.ejs -->
   <div class="header">
     <h1>Flashcards</h1>
     <div id="new-flashcard-container">  
+      <button type="submit" id="btn-submit" class="btn btn-secondary">Submit</button>
     </div>
   </div>
   
-  <div style="padding:60px;">
+  <div class='container'>
     <form action="/flashcards" method="POST">
       <div class="form-group">
           <label for="title">Question</label>
@@ -101,7 +113,6 @@
             <label for="description">Answer</label>
             <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Description" name="answer"></textarea>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
     </form>
     </div>
     

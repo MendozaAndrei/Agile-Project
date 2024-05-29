@@ -16,6 +16,10 @@
     align-items:center;
   }
 
+  .header h1{
+    margin-bottom: 0px;
+  }
+
   #new-flashcard-container
   {
     display:flex;
@@ -104,11 +108,11 @@
   }
 
   .btn-delete{
-    background-color: #E7D4FD;
+    background-color: #FFF092;
   }
 
   .btn-edit{
-    background-color: #FFF092;
+    background-color: #E7D4FD;
   }
 
   
@@ -173,7 +177,7 @@
         </div>
       </div>
       <div class="btn-display"> 
-          <a id="btn" class="btn-edit"  href="/flashcards/edit/<%= flashcard.id %>">Edit</a>
+          <a id="btn" class="btn-edit"   href="/flashcards/edit/<%= flashcard.id %>">Edit</a>
           <form class="deleteForm" method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
               <button type="submit" id="btn" class= "btn-delete" >Delete</button>
           </form>
