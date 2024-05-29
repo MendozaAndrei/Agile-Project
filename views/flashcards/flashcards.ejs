@@ -68,7 +68,6 @@
   }
 
   .flashcard-question, .flashcard-answer {
-    display: none;
     align-items: center;
     justify-content: center;
 
@@ -81,6 +80,10 @@
 
   .flashcard-question {
     display: flex;
+  }
+
+  .flashcard-answer{
+    display: none;
   }
   #btn-display{
       display:flex;
@@ -102,12 +105,25 @@
   /* card animations */
 
 
-  .flip {
-    animation: 2s 1 alternate ease flip;
+  .flip{
+    animation: .5s 1 alternate ease flip;
   }
 
-  .fade {
-    animation: 2s 1 alternate ease fade;
+  .unflip {
+    animation: .5s 1 alternate ease unflip;
+  }
+
+  @keyframes unflip {
+    from {
+      transform: rotateY(180deg);
+
+      
+    }
+
+    to {
+      transform: rotateY(0deg);
+      
+    }
   }
 
   @keyframes flip {
@@ -116,8 +132,10 @@
     }
 
     to {
-        transform: rotateY(360deg);
+        transform: rotateY(180deg);
     }
+
+  
   }
 
 </style>
@@ -136,7 +154,7 @@
     <li  style="width:fit-content;">
       <div class="flashcard-container">
         <div class="flashcard">
-          <div class="flashcard-question">
+          <div class="flashcard-question" >
             <h4><%= flashcard.question %></h4>
           </div>
           <div class="flashcard-answer">
@@ -162,12 +180,47 @@
       container.addEventListener('click', () => {
         const question = container.querySelector('.flashcard-question');
         const answer = container.querySelector('.flashcard-answer');
+        const flashcard = container.parentNode;
+        const buttons = container.querySelector("div#btn-display")
+        const flippers = [question, answer, flashcard, buttons]
         if (question.style.display !== 'none') {
           question.style.display = 'none';
+          /* STEVEN */
           answer.style.display = 'flex';
+
+          flippers.forEach(element => {
+            element.classList.remove('unflip');
+            element.classList.add('flip');
+            console.log(element)
+          })
+          // answer.classList.remove('unflip')
+          // flashcard.classList.remove('unflip')
+          // question.classList.remove('unflip')
+
+          // answer.classList.add('flip');
+          // flashcard.classList.add('flip')
+          // question.classList.add('flip')
+
         } else {
           question.style.display = 'flex';
           answer.style.display = 'none';
+
+          flippers.forEach(element => {
+            element.classList.remove('flip');
+            element.classList.add('unflip');
+            console.log(element)
+          })
+
+          // answer.classList.remove('flip')
+          // flashcard.classList.remove('flip')
+          // question.classList.remove('flip')
+
+          // answer.classList.add('unflip');
+          // flashcard.classList.add('unflip')
+
+          // question.classList.add('unflip')
+
+
         }
       });
     });
