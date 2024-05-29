@@ -85,7 +85,7 @@
   .flashcard-answer{
     display: none;
   }
-  #btn-display{
+  .btn-display{
       display:flex;
       justify-content: space-between;
   }
@@ -162,7 +162,7 @@
           </div>
         </div>
       </div>
-      <div id="btn-display"> 
+      <div class="btn-display"> 
           <a id="btn" style="background-color:blue;" href="/flashcards/edit/<%= flashcard.id %>">Edit</a>
           <form class="deleteForm" method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
               <button type="submit" id="btn" style="background-color:red">Delete</button>
@@ -181,7 +181,7 @@
         const question = container.querySelector('.flashcard-question');
         const answer = container.querySelector('.flashcard-answer');
         const flashcard = container.parentNode;
-        const buttons = container.querySelector("div#btn-display")
+        const buttons = container.parentNode.querySelector(".btn-display")
         const flippers = [question, answer, flashcard, buttons]
         if (question.style.display !== 'none') {
           question.style.display = 'none';
@@ -193,13 +193,6 @@
             element.classList.add('flip');
             console.log(element)
           })
-          // answer.classList.remove('unflip')
-          // flashcard.classList.remove('unflip')
-          // question.classList.remove('unflip')
-
-          // answer.classList.add('flip');
-          // flashcard.classList.add('flip')
-          // question.classList.add('flip')
 
         } else {
           question.style.display = 'flex';
@@ -210,16 +203,6 @@
             element.classList.add('unflip');
             console.log(element)
           })
-
-          // answer.classList.remove('flip')
-          // flashcard.classList.remove('flip')
-          // question.classList.remove('flip')
-
-          // answer.classList.add('unflip');
-          // flashcard.classList.add('unflip')
-
-          // question.classList.add('unflip')
-
 
         }
       });
