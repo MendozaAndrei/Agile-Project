@@ -24,6 +24,23 @@
     
   }
 
+    /* import from flashcards.ejs */
+    .header{
+    max-width: 1140px;
+    display:flex;
+    margin: 1vw auto 1vw auto;
+    align-items:center;
+  }
+
+  #new-flashcard-container
+  {
+    display:flex;
+    justify-content: flex-end;
+    margin-left: auto;
+
+    align-items:center;
+  }
+
     .flashcard {
       position: relative;
       width: 300px; /* Set a fixed width */
@@ -67,7 +84,13 @@
 
   </style>
   
-  <h1>Flashcards</h1>
+  <!-- import from flashcards.ejs -->
+  <div class="header">
+    <h1>Flashcards</h1>
+    <div id="new-flashcard-container">  
+    </div>
+  </div>
+  
   <div style="padding:60px;">
     <form action="/flashcards" method="POST">
       <div class="form-group">

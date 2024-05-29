@@ -1,7 +1,35 @@
 <%- include ("../partials/navbar.ejs") %>
 
+<style>
+    /* import from flashcards.ejs */
+  .header{
+    max-width: 1140px;
+    display:flex;
+    margin: 1vw auto 1vw auto;
+    align-items:center;
+  }
+
+  #new-flashcard-container
+  {
+    display:flex;
+    justify-content: flex-end;
+    margin-left: auto;
+
+    align-items:center;
+  }
+
+
+</style>
+<!-- import from flashcards.ejs -->
+<div class="header">
+  <h1>Edit Flashcard</h1>
+  <div id="new-flashcard-container">  
+    <button type="submit" class="btn btn-secondary">Submit</button>
+  </div>
+</div>
+
+
 <div class="container">
-  <h1 class="page-header">Edit</h1>
   <!-- 
     The actions are linked to the function that will happen to them.
     The method is set to POST because we are sending data to the server.
@@ -19,6 +47,6 @@
     </div>
 
     
-    <button type="submit" class="btn btn-default">Submit</button>
+    
   </form>
 </div>
