@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const ObjectId = require('mongodb').ObjectId;
 
-// ...
+
 let notesController = {
   list: async (req, res) => {
     let notes = await prisma.note.findMany({
@@ -56,7 +56,7 @@ let notesController = {
   },
 
 
-
+// DO NOT TOUCH PLEASE
   share: async (req,res)=>{
     let currentId = req.params.id
     let email = req.body.email
@@ -92,7 +92,7 @@ let notesController = {
 
     res.redirect("/notes")
   
-    // ...
+
   },
 
   update: async(req,res)=>{

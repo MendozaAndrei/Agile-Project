@@ -17,7 +17,7 @@ const localLogin = new LocalStrategy(
         });
   }
 );
-// create a session middleware with the given options
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

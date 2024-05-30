@@ -49,7 +49,10 @@ let authController = {
           res.redirect("/login")
         }
       } catch (err) {
-        // handle error
+        console.log(err)
+        res.render("auth/register", {
+          message: "Error creating user",
+        })
       }
     }
   }

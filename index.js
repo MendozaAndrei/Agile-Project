@@ -1,18 +1,21 @@
-// THIS IS A TEST - Andrei Jan Mendoza
 const express = require("express")
 const app = express()
 const path = require("path")
 const ejsLayouts = require("express-ejs-layouts")
-const reminderController = require("./controller/reminder_controller")
-const authController = require("./controller/auth_controller")
-// const noteController = require("./controller/note_controller")
 const session = require("express-session")
 const passport = require("./middleware/passport")
-// const { database } = require('./models/userModel.js') 
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
+
+
+const authController = require("./controller/auth_controller")
+const reminderController = require("./controller/reminder_controller")
 const flashcardController = require("./controller/flashcard_controller")
 const noteController = require("./controller/note_controller")
+const flashcardsController = require("./controller/flashcard_controller")
+const cors = require('cors'); //used for the session for the typescript, but still needs to be used just for now
 
-const cors = require('cors');
 const bodyParser = require('body-parser');
 
 
@@ -22,10 +25,7 @@ const { ensureAuthenticated } = require('./middleware/checkAuth.js')
 
 
 
-const { PrismaClient } = require('@prisma/client')
-const flashcardsController = require("./controller/flashcard_controller")
 
-const prisma = new PrismaClient()
 
 //;alsdkjf;alskdjf;asldkjf;asldkjf;laksf
 
@@ -106,17 +106,6 @@ app.get('/reminders/date', async (req, res) => {
   });
   res.json(reminders);
 });
-async function getRemindersForDate(dateString) {
-  let date = new Date(dateString);
-  let isoDate = date.toISOString();
-  const reminders = await prisma.reminder.findMany({
-    where: {
-      dateDue: isoDate
-    }
-  });
-  return reminders;
-}
-
 
 //Routes for Login and Logout
 app.get("/logout", reminderController.logout)
@@ -137,6 +126,9 @@ app.post("/notes/update/:id", noteController.update)
 app.post("/notes/delete/:id", noteController.delete)
 app.post("/notes/",noteController.create)
 app.post("/notes/share/:id", noteController.share);
+
+
+
 //Routes for FlashCards
 app.get('/flashcards', flashcardController.list);
 app.get('/flashcards/new', flashcardController.new);

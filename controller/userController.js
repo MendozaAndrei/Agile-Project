@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 function isUserValid(user, password) {
   return user.password === password
 }
-
+// ENCRYPTION BABYYYY
 const bcrypt = require('bcrypt');
 
 const getUserByEmailIdAndPassword = async (email, password) => {

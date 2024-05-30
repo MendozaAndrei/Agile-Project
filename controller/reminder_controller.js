@@ -37,8 +37,6 @@ let remindersController = {
     }
   },
 
-  // ... rest of your code
-
 
   new: (req, res) => {//seperate function
     res.render("reminder/create")
