@@ -1,13 +1,18 @@
-// THIS IS A TEST - Andrei Jan Mendoza
 const express = require("express")
 const app = express()
 const path = require("path")
 const ejsLayouts = require("express-ejs-layouts")
 const reminderController = require("./controller/reminder_controller")
 const authController = require("./controller/auth_controller")
+// const noteController = require("./controller/note_controller")
 const session = require("express-session")
 const passport = require("./middleware/passport")
-const { database } = require('./models/userModel.js') 
+// const { database } = require('./models/userModel.js') 
+const flashcardController = require("./controller/flashcard_controller")
+const noteController = require("./controller/note_controller")
+
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 
 const methodOverride = require('method-override')
@@ -17,8 +22,10 @@ const { ensureAuthenticated } = require('./middleware/checkAuth.js')
 
 
 const { PrismaClient } = require('@prisma/client')
+const flashcardsController = require("./controller/flashcard_controller")
 
 const prisma = new PrismaClient()
+
 
 //;alsdkjf;alskdjf;asldkjf;asldkjf;laksf
 
@@ -152,6 +159,14 @@ app.get('/reminders/:date', async (req, res) => {
   res.json(reminders);
 });
 
+//Routes for Notes
+app.get("/notes", noteController.list)
+app.get("/notes/new", noteController.new)
+app.get("/notes/edit/:id", noteController.edit)
+app.post("/notes/update/:id", noteController.update)
+app.post("/notes/delete/:id", noteController.delete)
+app.post("/notes/",noteController.create)
+app.post("/notes/share/:id", noteController.share);
 
 app.listen(3080, function () {
   console.log(passport.session())

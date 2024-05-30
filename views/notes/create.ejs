@@ -1,0 +1,44 @@
+
+
+<%- include ("../partials/navbar.ejs") %>
+
+<style>
+  .header{
+    max-width: 1140px;
+    display:flex;
+    margin: 1vw auto 1vw auto;
+    align-items:center;
+  }
+
+   .header h1{
+    margin-bottom: 0px;
+  }
+
+  #header-btn-container
+  {
+    display:flex;
+    justify-content: flex-end;
+    margin-left: auto;
+
+    align-items:center;
+  }
+
+</style>
+<div class="header">
+  <h1>Create Notebook</h1>
+  <div id="header-btn-container">  
+  </div>
+</div>
+
+
+<div class="container">
+  <form action="/notes" method="POST">
+    <div class="form-group">
+      <label for="title">Add a Title</label>
+      <input type="text" class="form-control" id="titleInput" placeholder="Title" name="title">
+    </div>
+    
+    <button type="submit" class="btn btn-custom">Submit</button>
+
+  </form>
+</div>

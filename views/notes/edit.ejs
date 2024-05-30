@@ -1,0 +1,32 @@
+<%- include ("../partials/navbar.ejs") %>
+
+<!-- <form action="/notes/update/<%= note.id %>" method="POST" style="height:auto; margin: 40px;">
+    <input type="submit" value="Submit" style="font-size: larger; border: none; background-color: transparent;">
+    <input style="width:100%;font-size:x-large;border: none;" type="text" id="title" name="title" value="<%= note.title %>"><br>
+    <textarea id="content" name="content" style="width: 100%; font-size: larger; border: none; overflow: hidden;height:100%; margin-top: 20px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" placeholder="New note! Write something here..."><%= note.content %></textarea><br>
+
+    
+</form> -->
+
+<div class="note-container" style="position: relative;">
+    <form action="/notes/update/<%= note.id %>" method="POST">
+      
+      <div class="form-group">
+        <input style="width:80%;font-size:x-large;border: none;" type="text" id="title" name="title" value="<%= note.title %>"><br>
+    
+        
+      </div>
+      <textarea id="content" name="content" style="width: 100%; font-size: larger; border: none; overflow: hidden; height:100%; margin-top: 20px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" placeholder="New note! Write something here..."><%= note.content %></textarea><br>
+      <button type="submit" class="btn btn-default submit-btn" style="margin-top: 500px;" >Submit</button>
+    </form>
+  </div>
+  
+
+
+<script>
+window.onload = function() {
+    var textarea = document.getElementById('content');
+    textarea.style.height = '';
+    textarea.style.height = textarea.scrollHeight + 'px';
+}
+</script>

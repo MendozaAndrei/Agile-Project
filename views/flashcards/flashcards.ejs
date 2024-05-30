@@ -1,0 +1,230 @@
+<%- include ("../partials/navbar.ejs") %>
+
+
+
+
+<style>
+  body{
+    text-align: center;
+    overflow: visible;
+  }
+
+  .header{
+    max-width: 1140px;
+    display:flex;
+    margin: 1vw auto 1vw auto;
+    align-items:center;
+  }
+
+  .header h1{
+    margin-bottom: 0px;
+  }
+
+  #header-btn-container
+  {
+    display:flex;
+    justify-content: flex-end;
+    margin-left: auto;
+
+    align-items:center;
+  }
+
+  #new-flashcard{
+    margin-bottom: auto;
+  }
+ 
+
+  .flashcard-container {
+    width: fit-content;
+  }   
+
+
+
+  ul{
+    border-top:black solid 2px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    gap: 10px;
+
+  }
+  li, #creation {
+  
+  padding: 10px 10px 10px 10px;
+  background-color: rgb(232, 232, 232);
+  margin: 30px 30px 30px 30px;
+  border-radius:5px;  
+  border: rgb(232, 232, 232) solid 2px;
+  list-style-type: none;
+    
+  }
+
+
+
+  .flashcard {
+    position: relative;
+    width: 300px; 
+    min-height: 200px;
+    margin: 10px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    overflow: auto; 
+  }
+
+  .flashcard-question, .flashcard-answer {
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    padding: 10px;
+    cursor: pointer;
+    height:250px;
+  }
+
+  .flashcard-question {
+    display: flex;
+  }
+
+  .flashcard-answer{
+    display: none;
+  }
+  .btn-display{
+      display:flex;
+  }
+  #btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 100%;
+  padding: 10px 20px;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+
+  .btn-delete{
+    background-color: #FFF092;
+  }
+
+  .btn-edit{
+    background-color: #E7D4FD;
+  }
+
+  
+  /* card animations */
+
+
+  .flip{
+    animation: .5s 1 alternate ease flip;
+  }
+
+  .unflip {
+    animation: .5s 1 alternate ease unflip;
+  }
+
+  @keyframes unflip {
+    from {
+      transform: rotateY(180deg);
+
+      
+    }
+
+    to {
+      transform: rotateY(0deg);
+      
+    }
+  }
+
+  @keyframes flip {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(180deg);
+    }
+
+  
+  }
+
+</style>
+
+<div class="header">
+  <h1>Flashcards</h1>
+  <div id="header-btn-container"> 
+    <a href="/flashcards/new" class="btn btn-secondary" id="new-flashcard">New Flashcard</a>
+  </div>
+  
+</div>
+
+
+<ul > 
+  <% flashcards.forEach(flashcard => { %>
+    <li  style="width:fit-content;">
+      <div class="flashcard-container">
+        <div class="flashcard">
+          <div class="flashcard-question" >
+            <h4><%= flashcard.question %></h4>
+          </div>
+          <div class="flashcard-answer">
+            <h4><%= flashcard.answer %></h4>
+          </div>
+        </div>
+      </div>
+      <div class="btn-display"> 
+        <a href="/flashcards/edit/<%= flashcard.id %>">
+          <img src="https://cdn-icons-png.flaticon.com/128/1388/1388394.png" alt="Edit" style="width:50px;height:50px;margin:20px 0px 0px 10px;">
+        </a>
+        
+
+
+        <form method="POST" action=<%= "/flashcards/delete/" + flashcard.id %>>
+          <button type="submit" id="btn" style="background: transparent; border: none;">
+            <img src="https://cdn-icons-png.flaticon.com/128/4218/4218149.png" alt="Delete" style="width:50px;height:50px">
+          </button>
+        </form>
+      <div> 
+
+    </li>
+  <% }); %>
+  
+</ul>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.flashcard-container').forEach(container => {
+      container.addEventListener('click', () => {
+        const question = container.querySelector('.flashcard-question');
+        const answer = container.querySelector('.flashcard-answer');
+        const flashcard = container.parentNode;
+        const buttons = container.parentNode.querySelector(".btn-display")
+        const flippers = [question, answer, flashcard, buttons]
+        if (question.style.display !== 'none') {
+          question.style.display = 'none';
+          /* STEVEN */
+          answer.style.display = 'flex';
+
+          flippers.forEach(element => {
+            element.classList.remove('unflip');
+            element.classList.add('flip');
+            console.log(element)
+          })
+
+        } else {
+          question.style.display = 'flex';
+          answer.style.display = 'none';
+
+          flippers.forEach(element => {
+            element.classList.remove('flip');
+            element.classList.add('unflip');
+            console.log(element)
+          })
+
+        }
+      });
+    });
+  });
+</script>

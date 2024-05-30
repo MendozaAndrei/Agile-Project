@@ -4,9 +4,9 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 // USER MODEL
 describe('Tests for User Model', () => {
-    afterEach(async () => {
-        await prisma.user.deleteMany();
-      });
+    // afterEach(async () => {
+    //     await prisma.user.deleteMany();
+    //   });
     
       afterAll(async () => {
         await prisma.$disconnect();
@@ -15,9 +15,9 @@ describe('Tests for User Model', () => {
   // Test for findOne
   test('findOne returns a user if they exist', async () => {
     const user1 = {
-      name: "Jimmy Doe",
-      email: "jimmy123@gmail.com",
-      password: "jimmy123!",
+      name: "Jack Doe",
+      email: "jack123@gmail.com",
+      password: "jack123!",
       role: "regular",
     };
     const createdUser = await userModel.addUser(user1);

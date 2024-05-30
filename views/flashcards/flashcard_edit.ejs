@@ -1,0 +1,57 @@
+<%- include ("../partials/navbar.ejs") %>
+
+<style>
+  
+    /* import from flashcards.ejs */
+  .header{
+    max-width: 1140px;
+    display:flex;
+    margin: 1vw auto 1vw auto;
+    align-items:center;
+  }
+
+  .header h1{
+    margin-bottom: 0px;
+  }
+
+  #header-btn-container
+  {
+    display:flex;
+    justify-content: flex-end;
+    margin-left: auto;
+
+    align-items:center;
+  }
+
+</style>
+<!-- import from flashcards.ejs -->
+<div class="header">
+  <h1>Edit Flashcard</h1>
+  <div id="header-btn-container">  
+   
+  </div>
+</div>
+
+
+<div class="container">
+  <!-- 
+    The actions are linked to the function that will happen to them.
+    The method is set to POST because we are sending data to the server.
+    Once this action is triggered, it will redirect to the reminders page with
+    the updated data.   
+  -->
+  <form action=<%= "/flashcards/update/" + flashcardItem.id %> method="POST">
+    <div class="form-group">
+      <label for="title">Question</label>
+      <input type="text" name="question" class="form-control" id="titleInput" value="<%= flashcardItem.question %>">
+    </div>
+    <div class="form-group">
+      <label for="description">answer</label>
+      <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Description" name="answer"><%= flashcardItem.answer %></textarea>
+    </div>
+    <button type="submit" class="btn btn-custom">Submit</button>
+
+    
+    
+  </form>
+</div>
